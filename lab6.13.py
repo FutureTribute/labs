@@ -15,8 +15,14 @@ class continent(Enum):
     Europe = 3
 while True:
     try:
-        s = country[input("country: ")]C
-        s2=continent(s.value)
-        print(s2)
+        s = country[input("country: ")]
+        s2=continent(s.value).name
+        print("Континент:", s2)
     except KeyError:
         print("Страна отсутствует в списке")
+    cont = input("Для продолжения введите yes, для завершения любое другое значение \n")
+    if cont == "yes":
+        print("")
+        continue
+    else:
+        break
