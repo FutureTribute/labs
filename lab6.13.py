@@ -3,14 +3,20 @@
 
 from enum import Enum
 class country(Enum):
-    Germany = 1
+    Germany = 3
     Cuba = 2
-    Laos = 3
-    Monaco = 4
-    Bangladesh = 5
-    Ukraine = 6
+    Laos = 1
+    Monaco = 3
+    Bangladesh = 1
+    Ukraine = 3
 class continent(Enum):
     Asia = 1
     America = 2
     Europe = 3
-s = country[input("country: ")]
+while True:
+    try:
+        s = country[input("country: ")]C
+        s2=continent(s.value)
+        print(s2)
+    except KeyError:
+        print("Страна отсутствует в списке")
