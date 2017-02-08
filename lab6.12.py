@@ -19,7 +19,7 @@ while True:
     try:
         x = float(input("length: "))
         p = measure[input("measure: ")]
-        print("Значение в метрах: ", x*p.value)
+        print("Значение в метрах: ", x * measure2[p.name].value)
     except (ValueError, KeyError):
         print("Неверно введенное значение или ключ")
     cont = input("Для продолжения введите yes, для завершения любое другое значение \n")
