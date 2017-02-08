@@ -3,6 +3,13 @@
 
 from enum import Enum
 class measure(Enum):
+    decimetre = 1
+    kilometre = 2
+    metre = 3
+    millimetre = 4
+    centimetre = 5
+
+class measure2(Enum):
     decimetre = 0.1
     kilometre = 1000
     metre = 1
