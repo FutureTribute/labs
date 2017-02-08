@@ -29,5 +29,19 @@ class animals(Enum):
 while True:
     try:
         x = int(input("Введите год нашей эры: "))
+        c = x % 5
+        c2 = colors(c).name
+        a = x % 12
+        a2 = animals(a).name
+        if a in (6, 7, 8, 10):
+            print(x, " год по древнеяпонскому календарю - ", c2, "ый ", a2, sep="")
+        else:
+            print(x, " год по древнеяпонскому календарю - ", c2, "ая ", a2, sep="")
     except ValueError:
         print("Неверное значение года")
+    cont = input("Для продолжения введите yes, для завершения любое другое значение \n")
+    if cont == "yes":
+        print("")
+        continue
+    else:
+        break
