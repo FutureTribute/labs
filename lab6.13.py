@@ -3,6 +3,13 @@
 
 from enum import Enum
 class country(Enum):
+    Germany = 1
+    Cuba = 2
+    Laos = 3
+    Monaco = 4
+    Bangladesh = 5
+    Ukraine = 6
+class country2(Enum):
     Germany = 3
     Cuba = 2
     Laos = 1
@@ -16,7 +23,7 @@ class continent(Enum):
 while True:
     try:
         s = country[input("country: ")]
-        s2=continent(s.value).name
+        s2 = continent(country2[s.name].value).name
         print("Континент:", s2)
     except KeyError:
         print("Страна отсутствует в списке")
