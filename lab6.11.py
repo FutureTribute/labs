@@ -9,16 +9,16 @@ while True:
         d = int(input("day: "))
         m = int(input("mounth: "))
         y = int(input("year: "))
-        if d not in days or m not in mounths or y not in years:
-            print("Введенные числа не соответствуют условию")
-        else:
-            if d+1 == 32:
-                if m+1 == 13:
-                    print("Следующий день: ", 1, 1, y + 1)
+        if d in days and m in mounths and y in years:
+            if m + 1 in mounths:
+                if d + 1 in days:
+                    print("Следующий день: ", d + 1, m, y)
                 else:
                     print("Следующий день: ", 1, m + 1, y)
             else:
-                print("Следующий день: ", d + 1, m, y)
+                print("Следующий день: ", 1, 1, y + 1)
+        else:
+            print("Введенные числа не соответствуют условию")
     except ValueError:
         print("Введены не целые числа")
     cont = input("Для продолжения введите yes, для завершения любое другое значение \n")
