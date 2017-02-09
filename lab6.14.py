@@ -8,11 +8,11 @@
 
 from enum import Enum
 class colors(Enum):
-    green = 4
-    red = 0
-    yellow = 1
-    white = 2
-    black = 3
+    green = 0
+    red = 1
+    yellow = 2
+    white = 3
+    black = 4
 class animals(Enum):
     rat = 4
     cow = 5
@@ -29,14 +29,18 @@ class animals(Enum):
 while True:
     try:
         x = int(input("Введите год нашей эры: "))
-        if x >= 0:
-            c = x % 5
-            c2 = colors(c).name
+        if x < 0:
+            print("Неверное значение года")
+        else:
+            c = (x - 4) % 60
+            c2 = 0
+            while c >= 12:
+                c -= 12
+                c2 += 1
+            c3 = colors(c2).name
             a = x % 12
             a2 = animals(a).name
-            print(x, "год по древнеяпонскому календарю -", c2, a2)
-        else:
-            print("Неверное значение года")
+            print(x, "год по древнеяпонскому календарю -", c3, a2)
     except ValueError:
         print("Неверное значение года")
     cont = input("Для продолжения введите yes, для завершения любое другое значение \n")
