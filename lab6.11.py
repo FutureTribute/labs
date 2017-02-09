@@ -12,12 +12,13 @@ while True:
         if d not in days or m not in mounths or y not in years:
             print("Введенные числа не соответствуют условию")
         else:
-            if d == 31 and m == 12:
-                print("Следующий день: ", 1, 1, y+1)
-            elif d == 31 and m in mounths:
-                print("Следующий день: ", 1, m+1, y)
+            if d+1 == 32:
+                if m+1 == 13:
+                    print("Следующий день: ", 1, 1, y + 1)
+                else:
+                    print("Следующий день: ", 1, m + 1, y)
             else:
-                print("Следующий день: ", d+1, m, y)
+                print("Следующий день: ", d + 1, m, y)
     except ValueError:
         print("Введены не целые числа")
     cont = input("Для продолжения введите yes, для завершения любое другое значение \n")
