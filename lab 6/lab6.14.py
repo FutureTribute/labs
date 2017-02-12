@@ -26,7 +26,6 @@ class animals(Enum):
     chicken = 1
     dog = 2
     pig = 3
-
 while True:
     try:
         x = int(input("Введите год нашей эры: "))
