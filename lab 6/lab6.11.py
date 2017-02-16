@@ -10,13 +10,13 @@ while True:
         m = int(input("mounth: "))
         y = int(input("year: "))
         if d in days and m in mounths and y in years:
-            if m + 1 in mounths:
-                if d + 1 in days:
+            if d + 1 in days and m in mounths:
+                if m + 1 not in mounths :
                     print("Следующий день: ", d + 1, m, y)
                 else:
-                    print("Следующий день: ", 1, m + 1, y)
+                    print("Следующий день: ", 1, 1, y + 1)
             else:
-                print("Следующий день: ", 1, 1, y + 1)
+                print("Следующий день: ", 1, m + 1, y)
         else:
             print("Введенные числа не соответствуют условию")
     except ValueError:
