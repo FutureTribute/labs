@@ -1,5 +1,5 @@
-#Засько Б., КНИТ16-А
-#По дате d, m, y определить дату следующего дня
+# Засько Б., КНИТ16-А
+# По дате d, m, y определить дату следующего дня
 
 days = range(1, 32)
 mounths = range(1, 13)
@@ -11,7 +11,7 @@ while True:
         y = int(input("year: "))
         if d in days and m in mounths and y in years:
             if d + 1 in days and m in mounths:
-                if m + 1 not in mounths :
+                if m + 1 not in mounths:
                     print("Следующий день: ", d + 1, m, y)
                 else:
                     print("Следующий день: ", 1, 1, y + 1)
