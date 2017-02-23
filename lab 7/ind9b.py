@@ -15,7 +15,27 @@ while True:
             a = a.replace(a.__getitem__(-1), "")
             b = set(a)
             if b | alp == alp:
-                ()
+                n = 1
+                d = a.find(",")
+                if d == -1:
+                    c = "0" + a
+                else:
+                    c = "0" + a[:d + 1]
+                    while True:
+                        d = a.find(",", d+1)
+                        if d == -1:
+                            c = c + str(n) + a[len(c) - n:]
+                            break
+                        c = c + str(n) + a[len(c) - n:d + 1]
+                        n += 1
+                b = set(c.split(","))
+                s0 = set()
+                s1 = set()
+                for i in b:
+                    if int(i.__getitem__(0)) % 2 == 0:
+                        s0.add(i[1:])
+                    else:
+                        s1.add(i[1:])
             else:
                 print("!Введены недопустимые символы/буквы")
         else:
