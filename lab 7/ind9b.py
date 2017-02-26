@@ -14,7 +14,7 @@ while True:
             a = a.replace(a.__getitem__(-1), "")
             b = set(a)
             if b | alp == alp:
-                n = 1
+                n = 1       # Индексация(четное/нечетное)
                 d = a.find(",")
                 if d == -1:
                     c = "0" + a
@@ -26,28 +26,31 @@ while True:
                             c = c + str(n) + a[len(c) - n:]
                             break
                         c = c + str(n) + a[len(c) - n:d + 1]
-                        n += 1
+                        n += 1    # Конец индексации
                 b = set(c.split(","))
                 s0 = set()
                 s1 = set()
-                for i in b:
+                for i in b:    # Разбиение четных/нечетных
                     if int(i.__getitem__(0)) % 2 == 0:
                         s0.add(i[1:])
                     else:
                         s1.add(i[1:])
-                for j in s0:
+                for j in s0:   # Исключение букв, входящих в четные слова
                     for i in pr:
                         if i in j:
                             pr2.remove(i)
                 ans = set()
-                for i in pr2:
+                for i in pr2:  # Окончательное решение
                     count = 0
                     for j in s1:
                        if i in j:
                            count += 1
                     if count == len(s1):
                         ans.add(i)
-                print(sorted(ans))
+                if len(b) == 1 or len(ans) == 0:
+                    print("Нечего выводить")
+                else:
+                    print(sorted(ans))
             else:
                 print("!Введены недопустимые символы/буквы")
         else:
