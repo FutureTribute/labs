@@ -38,7 +38,10 @@ while True:
                 for j in s0:   # Исключение букв, входящих в четные слова
                     for i in pr:
                         if i in j:
-                            pr2.remove(i)
+                            try:
+                                pr2.remove(i)
+                            except KeyError:
+                                ()
                 ans = set()
                 for i in pr2:  # Окончательное решение
                     count = 0
