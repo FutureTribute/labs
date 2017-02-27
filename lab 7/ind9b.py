@@ -6,7 +6,6 @@
 while True:
     alp = set("абвгдеёжзийклмнопрстуфхцчшщъыьэюя,")
     pr = {"б", "в", "г", "д", "ж", "з", "й", "л", "м", "н", "р"}
-    pr2 = pr.copy()
     a = input("Введите последовательность слов из строчных русских букв через запятую \n"
               "без пробелов и с точкой в конце: ")
     if a != "":
@@ -28,32 +27,28 @@ while True:
                         c = c + str(n) + a[len(c) - n:d + 1]
                         n += 1    # Конец индексации
                 b = set(c.split(","))
-                s0 = set()
-                s1 = set()
+                s0 = list()
+                s1 = list()
                 for i in b:    # Разбиение четных/нечетных
                     if int(i.__getitem__(0)) % 2 == 0:
-                        s0.add(i[1:])
+                        s0.append(i[1:])
                     else:
-                        s1.add(i[1:])
-                for j in s0:   # Исключение букв, входящих в четные слова
-                    for i in pr:
-                        if i in j:
-                            try:
-                                pr2.remove(i)
-                            except KeyError:
-                                ()
+                        s1.append(i[1:])
                 ans = set()
-                for i in pr2:  # Окончательное решение
-                    count = 0
-                    for j in s1:
-                       if i in j:
-                           count += 1
-                    if count == len(s1):
-                        ans.add(i)
-                if len(b) == 1 or len(ans) == 0:
+                for i in s1:
+                    for j in i:
+                        ans.add(j)
+                for i in s0:
+                    for j in i:
+                        try:
+                            ans.remove(j)
+                        except KeyError:
+                            ()
+                ans2 = ans & pr
+                if len(b) == 1 or len(ans2) == 0:
                     print("Нечего выводить")
                 else:
-                    print(sorted(ans))
+                    print(sorted(ans2))
             else:
                 print("!Введены недопустимые символы/буквы")
         else:
