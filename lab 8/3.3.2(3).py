@@ -2,17 +2,20 @@
 # Алгоритм Вагнера-Фишера
 
 from timeit import timeit
-import numpy as np
 
+setup = '''
+import numpy as np
 S = input("Введите строку: ")
 subS = input("Введите вторую строку: ")
-
 m = len(S)
 n = len(subS)
-d = np.zeros((m, n))
-for i in range(m):
+d = np.ones((m + 1, n + 1))
+'''
+
+stmt = '''
+for i in range(1, m + 1):
     d[i, 0] = i
-for j in range(n):
+for j in range(1, n + 1):
     d[0, j] = j
 for j in range(1, n):
     for i in range(1, m):
@@ -21,3 +24,6 @@ for j in range(1, n):
         else:
             d[i, j] = min(d[i - 1, j] + 1, d[i, j - 1] + 1, d[i - 1, j - 1] + 1)
 print("Расстояние между строками: ", int(d[m - 1, n - 1]))
+'''
+time = timeit(stmt, setup, number=1)
+print("Время выполнения алгоритма: {:f} секунд".format(time))

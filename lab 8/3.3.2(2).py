@@ -2,11 +2,13 @@
 # Алгоритм Бойера-Мура-Хорспула
 
 from timeit import timeit
-import numpy as np
 
+setup = '''
 S = input("Введите строку: ")
 subS = input("Введите подстроку: ")
+'''
 
+stmt = '''
 n = len(S)
 m = len(subS)
 d = [m] * (ord(max(max(S), max(subS))) + 1)
@@ -26,3 +28,6 @@ if pos != -1:
     print("Элемент найден в позиции", pos)
 else:
     print("Элемент не найден")
+'''
+time = timeit(stmt, setup, number=1)
+print("Время выполнения алгоритма: {:f} секунд".format(time))

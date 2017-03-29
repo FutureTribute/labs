@@ -3,9 +3,12 @@
 
 from timeit import timeit
 
+setup = '''
 S = input("Введите строку: ")
 subS = input("Введите подстроку: ")
+'''
 
+stmt = '''
 t = [0] * len(subS)
 j = 0
 for i in range(1, len(subS)):
@@ -29,3 +32,6 @@ else:
         print("Элемент найден в позиции", k - m)
     else:
         print("Элемент не найден")
+'''
+time = timeit(stmt, setup, number=1)
+print("Время выполнения алгоритма: {:f} секунд".format(time))

@@ -3,8 +3,12 @@
 
 from timeit import timeit
 
+setup = '''
 S = input("Введите строку: ")
 subS = input("Введите подстроку: ")
+'''
+
+stmt = '''
 i = -1
 j = 0
 while j < len(subS) and i < (len(S) - len(subS)):
@@ -16,3 +20,6 @@ if j == len(subS):
     print("Элемент найден в позиции", i+1)
 else:
     print("Элемент не найден")
+'''
+time = timeit(stmt, setup, number=1)
+print("Время выполнения алгоритма: {:f} секунд".format(time))
