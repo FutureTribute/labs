@@ -2,7 +2,6 @@
 # Алгоритм Кнута-Морриса-Пратта
 
 from timeit import timeit
-import numpy as np
 
 S = input("Введите строку: ")
 subS = input("Введите подстроку: ")
