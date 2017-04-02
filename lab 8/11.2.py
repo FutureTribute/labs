@@ -5,8 +5,5 @@ import numpy as np
 
 a = np.arange(9)
 print("Линейный массив - ", a)
-try:
-    K = int(input("На сколько позиций сдвинуть - "))
-except ValueError:
-    print("Введите целое число!")
-print("Измененный массив - ", np.roll(a, -K))
+K = int(input("На сколько позиций влево сдвинуть - "))
+print("Измененный массив - ", np.append(a[K:], a[:K]))
