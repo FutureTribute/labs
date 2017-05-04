@@ -2,6 +2,7 @@
 
 from time import clock
 import numpy as np
+from copy import deepcopy
 
 # Если параметр c - 0, то массив сортируеться по неубыванию
 
@@ -236,332 +237,359 @@ def heap_sort(sequence, c):
     s, p = 0, 0  # Счетчики
 
     def sift_down(parent, limit):
-        nonlocal s, p, c
+        nonlocal s, p
         item = sequence[parent]
         s += 1
-        if c == 0:
-            while True:
-                s += 4
-                child = (parent << 1) + 1
-                if child >= limit:
-                    break
-                if child + 1 < limit and sequence[child] < sequence[child + 1]:
-                    s += 1
-                    child += 1
-                if item < sequence[child]:
-                    s += 1
-                    p += 1
-                    sequence[parent] = sequence[child]
-                    parent = child
-                else:
-                    break
-        else:
-            while True:
-                s += 4
-                child = (parent << 1) + 1
-                if child >= limit:
-                    break
-                if child + 1 < limit and sequence[child] > sequence[child + 1]:
-                    s += 1
-                    child += 1
-                if item > sequence[child]:
-                    s += 1
-                    p += 1
-                    sequence[parent] = sequence[child]
-                    parent = child
-                else:
-                    break
+        while True:
+            s += 4
+            child = (parent << 1) + 1
+            if child >= limit:
+                break
+            if child + 1 < limit and sequence[child] < sequence[child + 1]:
+                s += 1
+                child += 1
+            if item < sequence[child]:
+                s += 1
+                p += 1
+                sequence[parent] = sequence[child]
+                parent = child
+            else:
+                break
         sequence[parent] = item
         p += 1
 
-    length = len(sequence)
-    for index in range((length >> 1) - 1, -1, -1):
+    def sift_down2(parent, limit):
+        nonlocal s, p
+        item = sequence[parent]
         s += 1
-        sift_down(index, length)
-    for index in range(length - 1, 0, -1):
-        s += 1
+        while True:
+            s += 4
+            child = (parent << 1) + 1
+            if child >= limit:
+                break
+            if child + 1 < limit and sequence[child] > sequence[child + 1]:
+                s += 1
+                child += 1
+            if item > sequence[child]:
+                s += 1
+                p += 1
+                sequence[parent] = sequence[child]
+                parent = child
+            else:
+                break
+        sequence[parent] = item
         p += 1
-        sequence[0], sequence[index] = sequence[index], sequence[0]
-        sift_down(0, index)
+
+    if c == 0:
+        length = len(sequence)
+        for index in range((length >> 1) - 1, -1, -1):
+            s += 1
+            sift_down(index, length)
+        for index in range(length - 1, 0, -1):
+            s += 1
+            p += 1
+            sequence[0], sequence[index] = sequence[index], sequence[0]
+            sift_down(0, index)
+    else:
+        length = len(sequence)
+        for index in range((length >> 1) - 1, -1, -1):
+            s += 1
+            sift_down2(index, length)
+        for index in range(length - 1, 0, -1):
+            s += 1
+            p += 1
+            sequence[0], sequence[index] = sequence[index], sequence[0]
+            sift_down2(0, index)
     return sequence, s, p
 
 arr = np.random.randint(3333, size=3333)
+lst = [deepcopy(arr)] * 12
+a0, a1, a2, a3, a4, a5, a6, a7, a8, a9, a10, a11 = lst
 print("Сортировка по НЕУБЫВАНИЮ. Массив:")
-print(arr, end="\n\n")
+print(arr)
 t = clock()
-x = bubble_sort(arr, 0)
+x = bubble_sort(a0, 0)
 t = clock() - t
 print("Время выполнения bubble_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = selection_sort(arr, 0)
+x = selection_sort(a1, 0)
 t = clock() - t
 print("Время выполнения selection_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-insertion_sort(arr, 0)
+insertion_sort(a2, 0)
 t = clock() - t
 print("Время выполнения insertion_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = cocktail_sort(arr, 0)
+x = cocktail_sort(a3, 0)
 t = clock() - t
 print("Время выполнения cocktail_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = shell_sort(arr, 0)
+x = shell_sort(a4, 0)
 t = clock() - t
 print("Время выполнения shell_sort: {:f} секунд, перестановок: {},сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = heap_sort(arr, 0)
+x = heap_sort(a5, 0)
 t = clock() - t
-print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}\n".format(t, x[2], x[1]))
+print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 print("Отсортированый массив:")
-print(x[0], end="\n\n")
+print(x[0])
 
 print("===============================================================")
 print("Сортировка по НЕВОЗРАСТАНИЮ. Массив:")
-print(arr, end="\n\n")
+print(arr)
+
 t = clock()
-x = bubble_sort(arr, 1)
+x = bubble_sort(a6, 1)
 t = clock() - t
 print("Время выполнения bubble_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = selection_sort(arr, 1)
+x = selection_sort(a7, 1)
 t = clock() - t
 print("Время выполнения selection_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-insertion_sort(arr, 1)
+insertion_sort(a8, 1)
 t = clock() - t
 print("Время выполнения insertion_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = cocktail_sort(arr, 1)
+x = cocktail_sort(a9, 1)
 t = clock() - t
 print("Время выполнения cocktail_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = shell_sort(arr, 1)
+x = shell_sort(a10, 1)
 t = clock() - t
 print("Время выполнения shell_sort: {:f} секунд, перестановок: {},сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = heap_sort(arr, 1)
+x = heap_sort(a11, 1)
 t = clock() - t
-print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}\n".format(t, x[2], x[1]))
+print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 print("Отсортированый массив:")
-print(x[0], end="\n\n")
+print(x[0])
 
 print("===============================================================")
 arr1 = np.arange(3333)
+lst = [deepcopy(arr)] * 12
+ar0, ar1, ar2, ar3, ar4, ar5, ar6, ar7, ar8, ar9, ar10, ar11 = lst
 print("Сортировка по НЕУБЫВАНИЮ. Массив:")
-print(arr1, end="\n\n")
+print(arr1)
 t = clock()
-x = bubble_sort(arr1, 0)
+x = bubble_sort(ar0, 0)
 t = clock() - t
 print("Время выполнения bubble_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = selection_sort(arr1, 0)
+x = selection_sort(ar1, 0)
 t = clock() - t
 print("Время выполнения selection_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-insertion_sort(arr1, 0)
+insertion_sort(ar2, 0)
 t = clock() - t
 print("Время выполнения insertion_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = cocktail_sort(arr1, 0)
+x = cocktail_sort(ar3, 0)
 t = clock() - t
 print("Время выполнения cocktail_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = shell_sort(arr1, 0)
+x = shell_sort(ar4, 0)
 t = clock() - t
 print("Время выполнения shell_sort: {:f} секунд, перестановок: {},сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = heap_sort(arr1, 0)
+x = heap_sort(ar5, 0)
 t = clock() - t
-print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}\n".format(t, x[2], x[1]))
+print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 print("Отсортированый массив:")
-print(x[0], end="\n\n")
+print(x[0])
 
 print("===============================================================")
 print("Сортировка по НЕВОЗРАСТАНИЮ. Массив:")
-print(arr1, end="\n\n")
+print(arr1)
 t = clock()
-x = bubble_sort(arr1, 1)
+x = bubble_sort(ar6, 1)
 t = clock() - t
 print("Время выполнения bubble_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = selection_sort(arr1, 1)
+x = selection_sort(ar7, 1)
 t = clock() - t
 print("Время выполнения selection_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-insertion_sort(arr1, 1)
+insertion_sort(ar8, 1)
 t = clock() - t
 print("Время выполнения insertion_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = cocktail_sort(arr1, 1)
+x = cocktail_sort(ar9, 1)
 t = clock() - t
 print("Время выполнения cocktail_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = shell_sort(arr1, 1)
+x = shell_sort(ar10, 1)
 t = clock() - t
 print("Время выполнения shell_sort: {:f} секунд, перестановок: {},сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = heap_sort(arr1, 1)
+x = heap_sort(ar11, 1)
 t = clock() - t
-print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}\n".format(t, x[2], x[1]))
+print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 print("Отсортированый массив:")
-print(x[0], end="\n\n")
+print(x[0])
 
 print("===============================================================")
 arr10 = np.random.randint(100000, size=100000)
+lst = [deepcopy(arr)] * 12
+a100, a101, a102, a103 = lst
 print("Сортировка по НЕУБЫВАНИЮ. Массив:")
-print(arr10, end="\n\n")
+print(arr10)
 
 t = clock()
-x = shell_sort(arr10, 0)
+x = shell_sort(a10 , 0)
 t = clock() - t
 print("Время выполнения shell_sort: {:f} секунд, перестановок: {},сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = heap_sort(arr10, 0)
+x = heap_sort(a101, 0)
 t = clock() - t
-print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}\n".format(t, x[2], x[1]))
+print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 print("Отсортированый массив:")
-print(x[0], end="\n\n")
+print(x[0])
 
 print("===============================================================")
 print("Сортировка по НЕВОЗРАСТАНИЮ. Массив:")
-print(arr10, end="\n\n")
+print(arr10)
 
 t = clock()
-x = shell_sort(arr10, 1)
+x = shell_sort(a102, 1)
 t = clock() - t
 print("Время выполнения shell_sort: {:f} секунд, перестановок: {},сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = heap_sort(arr10, 1)
+x = heap_sort(a103, 1)
 t = clock() - t
-print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}\n".format(t, x[2], x[1]))
+print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 print("Отсортированый массив:")
-print(x[0], end="\n\n")
+print(x[0])
 
 print("===============================================================")
 arr11 = np.arange(100000)
+lst = [deepcopy(arr)] * 12
+a110, a111, a112, a113 = lst
 print("Сортировка по НЕУБЫВАНИЮ. Массив:")
-print(arr11, end="\n\n")
+print(arr11)
 
 t = clock()
-x = shell_sort(arr11, 0)
+x = shell_sort(a110, 0)
 t = clock() - t
 print("Время выполнения shell_sort: {:f} секунд, перестановок: {},сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = heap_sort(arr11, 0)
+x = heap_sort(a111, 0)
 t = clock() - t
-print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}\n".format(t, x[2], x[1]))
+print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 print("Отсортированый массив:")
-print(x[0], end="\n\n")
+print(x[0])
 
 print("===============================================================")
-print("Сортировка по НЕУБЫВАНИЮ. Массив:")
-print(arr11, end="\n\n")
+print("Сортировка по НЕВОЗРАСТАНИЮ. Массив:")
+print(arr11)
 
 t = clock()
-x = shell_sort(arr11, 1)
+x = shell_sort(a112, 1)
 t = clock() - t
 print("Время выполнения shell_sort: {:f} секунд, перестановок: {},сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = heap_sort(arr11, 1)
+x = heap_sort(a113, 1)
 t = clock() - t
-print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}\n".format(t, x[2], x[1]))
+print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 print("Отсортированый массив:")
-print(x[0], end="\n\n")
+print(x[0])
 
 print("===============================================================")
 n = int(input("Количество элементов в массиве (до 30): "))
 arr3 = np.zeros(n, dtype=int)
 for i in range(n):
     arr3[i] = int(input("Введите значение для элемента {}: ".format(int(i+1))))
+lst = [deepcopy(arr)] * 12
+ar30, ar31, ar32, ar33, ar34, ar35, ar36, ar37, ar38, ar39, ar310, ar311 = lst
 print("Сортировка по НЕУБЫВАНИЮ. Массив:")
-print(arr3, end="\n\n")
+print(arr3)
 t = clock()
-x = bubble_sort(arr3, 0)
+x = bubble_sort(ar30, 0)
 t = clock() - t
 print("Время выполнения bubble_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = selection_sort(arr3, 0)
+x = selection_sort(ar31, 0)
 t = clock() - t
 print("Время выполнения selection_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-insertion_sort(arr3, 0)
+insertion_sort(ar32, 0)
 t = clock() - t
 print("Время выполнения insertion_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = cocktail_sort(arr3, 0)
+x = cocktail_sort(ar33, 0)
 t = clock() - t
 print("Время выполнения cocktail_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = shell_sort(arr3, 0)
+x = shell_sort(ar34, 0)
 t = clock() - t
 print("Время выполнения shell_sort: {:f} секунд, перестановок: {},сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = heap_sort(arr3, 0)
+x = heap_sort(ar35, 0)
 t = clock() - t
-print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}\n".format(t, x[2], x[1]))
+print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 print("Отсортированый массив:")
-print(x[0], end="\n\n")
+print(x[0])
 
 print("===============================================================")
 print("Сортировка по НЕВОЗРАСТАНИЮ. Массив:")
-print(arr3, end="\n\n")
+print(arr3)
 t = clock()
-x = bubble_sort(arr3, 1)
+x = bubble_sort(ar36, 1)
 t = clock() - t
 print("Время выполнения bubble_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = selection_sort(arr3, 1)
+x = selection_sort(ar37, 1)
 t = clock() - t
 print("Время выполнения selection_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-insertion_sort(arr3, 1)
+insertion_sort(ar38, 1)
 t = clock() - t
 print("Время выполнения insertion_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = cocktail_sort(arr3, 1)
+x = cocktail_sort(ar39, 1)
 t = clock() - t
 print("Время выполнения cocktail_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = shell_sort(arr3, 1)
+x = shell_sort(ar310, 1)
 t = clock() - t
 print("Время выполнения shell_sort: {:f} секунд, перестановок: {},сравнений: {}".format(t, x[2], x[1]))
 
 t = clock()
-x = heap_sort(arr3, 1)
+x = heap_sort(ar311, 1)
 t = clock() - t
-print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}\n".format(t, x[2], x[1]))
+print("Время выполнения heap_sort: {:f} секунд, перестановок: {}, сравнений: {}".format(t, x[2], x[1]))
 print("Отсортированый массив:")
-print(x[0], end="\n\n")
+print(x[0])
