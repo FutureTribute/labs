@@ -16,7 +16,7 @@ li = []
 stmt = '''
 for el in S:
     m = len(el)
-    d = np.ones((m + 1, n + 1))
+    d = np.zeros((m + 1, n + 1))
     for i in range(1, m + 1):
         d[i, 0] = i
     for j in range(1, n + 1):
