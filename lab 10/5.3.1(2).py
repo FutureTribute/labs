@@ -1,9 +1,15 @@
 # Засько Б., КНИТ16-А
+# Найти сумму и произведение элементов квадратной матрицы; осуществить поиск элемента в квадратной матрице
 
 import numpy as np
 
 
 def sum_iter(a):
+    """Итерационное нахождение суммы элементов квадратной матрицы
+    
+    :param a: исходная квадратная матрица
+    :return: сумма элементов
+    """
     s = 0
     for i in a:
         for j in i:
@@ -12,6 +18,11 @@ def sum_iter(a):
 
 
 def sum_rek(a):
+    """Рекурсивное нахождение суммы элементов квадратной матрицы
+    
+    :param a: исходная квадратная матрица
+    :return: сумма элементов
+    """
     if type(a) != np.ndarray:
         return a
     elif len(a) == 0:
@@ -21,6 +32,11 @@ def sum_rek(a):
 
 
 def mul_iter(a):
+    """Итерационное нахождение произведения элементов квадратной матрицы
+    
+    :param a: исходная квадратная матрица
+    :return: произведение элементов
+    """
     m = 1
     for i in a:
         for j in i:
@@ -29,6 +45,11 @@ def mul_iter(a):
 
 
 def mul_rek(a):
+    """Рекурсивное нахождение произведения элементов квадратной матрицы 
+    
+    :param a: исходная квадратная матрица
+    :return: произведение элементов
+    """
     if type(a) != np.ndarray:
         return a
     elif len(a) == 0:
@@ -38,6 +59,12 @@ def mul_rek(a):
 
 
 def sea_iter(a, x):
+    """Итерационный поиск элемента по заданому значению в квадратной матрице
+    
+    :param a: исходная квадратная матрица
+    :param x: искомый элемент
+    :return: позиция элемента
+    """
     for i in range(len(a)):
         for j in range(len(a)):
             if a[i][j] == x:
@@ -45,6 +72,21 @@ def sea_iter(a, x):
 
 
 def sea_rek(a, x, t, t2):
+    """Рекурсивный поиск элемента по заданому значению в квадратной матрице
+    
+    :param a: исходная квадратная матрица
+    :param x: искомый элемент
+    :param t: позиция в строке
+    :param t2: позиция в столбце
+    :return: позиция элемента
+    """
+    def sea_rek2(a, x, t2):
+        if a[0] == x:
+            return t2 + 1
+        else:
+            t2 += 1
+            return sea_rek2(a[1:], x, t2)
+
     if len(a) == 0:
         return None
     elif x in a[0]:
@@ -55,12 +97,7 @@ def sea_rek(a, x, t, t2):
         return sea_rek(a[1:], x, t, t2)
 
 
-def sea_rek2(a, x, t2):
-    if a[0] == x:
-        return t2+1
-    else:
-        t2 += 1
-        return sea_rek2(a[1:], x, t2)
+
 
 while True:
     try:

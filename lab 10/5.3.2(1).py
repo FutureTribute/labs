@@ -1,21 +1,44 @@
 # Засько Б., КНИТ16-А
+# Функция Аккермана
 
-import numpy as np
 import sys
 
-sys.setrecursionlimit(10000)
+print("Устанавливаеться глубина рекурсии...")
+i = 0
+while True:
+    try:
+        i += 100
+        sys.setrecursionlimit(i)
+    except OverflowError:
+        sys.setrecursionlimit(i - 100)
+        break
+print("Максимальная глубина рекурсии:", sys.getrecursionlimit())
 
 
-def ackermann(n, m):
+def ackermann(n, m, lvl = 0):
+    """Рекурсивное вычисление функции Аккермана
+    
+    :param n: первое число
+    :param m: второе число
+    :return: функция Аккермана
+    """
+    global c
+    c = lvl
     if n == 0:
         return m+1
     elif m == 0 and n > 0:
-        return ackermann(n - 1, 1)
+        return ackermann(n - 1, 1, lvl=c+1)
     elif n > 0 and m > 0:
-        return ackermann(n - 1, ackermann(n, m - 1))
+        return ackermann(n - 1, ackermann(n, m - 1, lvl=c+1), lvl=c+1)
 
 
 def ackermann2(n, m):
+    """Итерационное вычисление функции Аккермана, имитируя стек
+    
+    :param n: первое число
+    :param m: второе число
+    :return: функция Аккермана
+    """
     stack = []
     while True:
         if not n:
@@ -28,11 +51,13 @@ def ackermann2(n, m):
             stack.append(n - 1)
             m -= 1
 
+
 while True:
     try:
+        c = None
         f = int(input("Первое число: "))
         f1 = int(input("Второе число: "))
-        print(ackermann(f, f1))
-        print(ackermann2(f, f1))
+        print("Результат рекурсивно: {}, глубина рекурсии: {}".format(ackermann(f, f1), c))
+        print("Результат итерационно: {}".format(ackermann2(f, f1)))
     except ValueError:
         print("Введены некоректные данные")
