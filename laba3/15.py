@@ -1,0 +1,6 @@
+print(1, 2, 3, 4, 5, sep="")
+print("%2d" % 1, 2, 3, 4, sep="", end="")
+print()
+print("%3d" % 1, 2, 3, sep="")
+print("\n%4d" % 1, 2, sep="")
+print("%5d" % 1)
